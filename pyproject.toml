@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "local-cache"
+version = "0.1.0"
+authors = [
+  {name="Umar Butler", email="umar@umar.au"},
+]
+description = "An easy-to-use Python library for lightning-fast persistent function caching."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text="MIT"}
+keywords = [
+    "cache",
+    "caching",
+    "local",
+    "persistent",
+    "function",
+    "functions",
+    "decorator",
+    "memoization",
+    "memoisation",
+    "memoize",
+    "memoise",
+    "performance",
+    "optimization",
+    "optimisation",
+    "optimise",
+    "optimize",
+    "optimizing",
+    "optimising",
+    "speed",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+dependencies = [
+    "dill>=0.3.7",
+    "filelock>=3.13.1",
+    "msgspec>=0.18.6",
+    "xxhash>=3.4.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/umarbutler/local-cache"
+Documentation = "https://github.com/umarbutler/local-cache/blob/main/README.md"
+Issues = "https://github.com/umarbutler/local-cache/issues"
+Source = "https://github.com/umarbutler/local-cache"
