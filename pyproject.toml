@@ -10,7 +10,7 @@ authors = [
 ]
 description = "An easy-to-use Python library for lightning-fast persistent function caching."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = {text="MIT"}
 keywords = [
     "cache",
@@ -39,7 +39,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
