@@ -3,6 +3,14 @@
 
 `local-cache` is an *easy-to-use* Python library for lightning-fast persistent function caching. It is capable of caching both synchronous and asynchronous functions as well as methods, and is also process-safe and thread-safe.
 
+## Features 🎯
+- **⚡ Lightning-fast**: `local-cache` can cache a function call in 400 nanoseconds and return it back in a single millisecond.
+- **💽 Persistent**: cached returns persist across sessions and are stored locally.
+- **⌛ Stale-free**: cached returns may be given shelf lives, after which they will be automatically flushed out.
+- **🦺 Process- and thread-safe**: interprocess file locks prevent processes and threads from writing over each other.
+- **⏱️ Async-compatible**: asynchronous functions can be cached with the same decorator as synchronous ones.
+- **👨‍🏫 Class-compatible**: methods can be cached with the same decorator as functions (although the `self` argument will always be ignored).
+
 ## Installation 📦
 `local-cache` may be installed with `pip`:
 ```bash
@@ -43,14 +51,6 @@ my_function.flush_cache() # Flush out any expired cached returns.
 my_function.clear_cache() # Clear out all cached returns.
 my_function.delete_cache() # Delete the cache.
 ```
-
-## Features 🎯
-- **⚡ Lightning-fast**: `local-cache` can cache a function call in 400 nanoseconds and return it back in a single millisecond.
-- **💽 Persistent**: cached returns persist across sessions and are stored locally.
-- **⌛ Stale-free**: cached results can be given shelf lives, after which they will be automatically flushed out.
-- **🦺 Process- and thread-safe**: interprocess file locks prevent processes and threads from writing over each other.
-- **⏱️ Async-compatible**: asynchronous functions can be cached with the same decorator as synchronous ones.
-- **👨‍🏫 Class-compatible**: methods can be cached with the same decorator as functions (although the `self` argument will always be ignored).
 
 ## API 🧩
 ### `cache()`
