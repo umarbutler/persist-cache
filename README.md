@@ -4,7 +4,7 @@
 `persist-cache` is an *easy-to-use* Python library for lightning-fast persistent function caching. It is capable of caching both synchronous and asynchronous functions as well as methods, and is also process-safe and thread-safe.
 
 ## Features 🎯
-- **⚡ Lightning-fast**: `persist-cache` can cache a function call in 400 nanoseconds and return it back in a single millisecond.
+- **⚡ Lightning-fast**: A function call can be cached in as little as 350 nanoseconds and be returned in as little as 100 nanoseconds.
 - **💽 Persistent**: cached returns persist across sessions and are stored locally.
 - **⌛ Stale-free**: cached returns may be given shelf lives, after which they will be automatically flushed out.
 - **🦺 Process- and thread-safe**: interprocess file locks prevent processes and threads from writing over each other.
