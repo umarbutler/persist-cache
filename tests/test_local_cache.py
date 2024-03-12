@@ -89,7 +89,6 @@ def _test_cached_function(cached_function: Callable, dir: str = None, expiry: in
     cached_function.set_expiry(2)
     cached_result = cached_function(**data)
     time.sleep(3)
-    cached_function.flush_cache()
     assert cached_function(**data) != cached_result
     
     # Test deleting the cache if the cache's directory is known.
