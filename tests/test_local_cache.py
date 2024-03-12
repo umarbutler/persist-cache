@@ -3,7 +3,7 @@ import os
 import random
 import shutil
 import time
-from typing import Callable
+from typing import Callable, Union
 
 import local_cache
 
@@ -22,8 +22,8 @@ def _time_consuming_function(
     float_: float = None,
     none_: None = None,
     class_: type = None,
-    recursive: dict[str, list[tuple[bytes, bool]] | float] = None,
-) -> tuple[str, int, list[int], dict[str, int], tuple[int, str], set[int], frozenset[int], bytes, bytearray, bool, float, None, type, dict[str, list[tuple[bytes, bool]] | float], float]:
+    recursive: dict[str, Union[list[tuple[bytes, bool]], float]] = None,
+) -> tuple[str, int, list[int], dict[str, int], tuple[int, str], set[int], frozenset[int], bytes, bytearray, bool, float, None, type, dict[str, Union[list[tuple[bytes, bool]], float]], float]:
     """A time-consuming function."""
     
     return str_, int_, list_, dict_, tuple_, set_, frozenset_, bytes_, bytearray_, bool_, float_, none_, class_, recursive, random.random()

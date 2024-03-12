@@ -1,9 +1,9 @@
-from typing import Any
+from typing import Any, Union
 
 import dill as pickle
 import msgspec
 
-Msgpackables = str | int | list | dict | bool | float | type(None)
+Msgpackables = Union[str, int, list, dict, bool, float, None]
 """Types that are directly msgpackable."""
 
 # Initialise msgpack encoders and decoders once to speed up subsequent serialization and deserialization.

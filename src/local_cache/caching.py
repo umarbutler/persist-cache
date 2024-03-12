@@ -1,7 +1,7 @@
 import os
 import shutil
 from datetime import datetime, timedelta
-from typing import Any
+from typing import Any, Union
 
 from filelock import FileLock
 from xxhash import xxh3_64_hexdigest
@@ -21,7 +21,7 @@ def set(key: str, value: Any, dir: str) -> None:
         open(path, 'wb') as file:
             file.write(serialize(value))
 
-def get(key: str, dir: str, expiry: int | float | timedelta | None = None) -> Any:
+def get(key: str, dir: str, expiry: Union[int, float, timedelta, None] = None) -> Any:
     """Get the value of the given key from the provided cache if it is not expired."""
     
     path = f'{dir}/{key}.msgpack'
@@ -69,7 +69,7 @@ def clear(dir: str) -> None:
     # Recreate the cache directory.
     os.makedirs(dir, exist_ok=True)
 
-def flush(dir: str, expiry: int | float | timedelta | None) -> None:
+def flush(dir: str, expiry: Union[int, float, timedelta, None]) -> None:
     """Flush expired keys from the provided cache."""
     
     # Iterate over keys in the cache.

@@ -3,7 +3,7 @@ import inspect
 import os
 from datetime import timedelta
 from functools import wraps
-from typing import Any, Callable
+from typing import Any, Callable, Union
 
 from . import caching
 from .caching import NOT_IN_CACHE
@@ -11,9 +11,9 @@ from .helpers import inflate_arguments, signaturize
 
 
 def cache(
-        name: str | Callable | None = None,
-        dir: str | None = None,
-        expiry: int | float | timedelta | None = None,
+        name: Union[str, Callable, None] = None,
+        dir: Union[str, None] = None,
+        expiry: Union[int, float, timedelta, None] = None,
     ) -> Callable:
     """Persistently and locally cache the returns of a function.
     

@@ -1,8 +1,8 @@
 import inspect
-from typing import Any, Callable
+from typing import Any, Callable, Union
 
 
-def signaturize(func: Callable) -> tuple[dict[str, Any], str | None, int | None, str | None]:
+def signaturize(func: Callable) -> tuple[dict[str, Any], Union[str, None], Union[int, None], Union[str, None]]:
     """Map the given function's arguments to their default values and also return the name and index of the args parameter if such a parameter exists."""
     
     signature = {}
@@ -24,7 +24,7 @@ def signaturize(func: Callable) -> tuple[dict[str, Any], str | None, int | None,
     
     return signature, args_parameter, args_i
 
-def inflate_arguments(signature: dict[str, Any], args_parameter: str | None, args_i: int | None, args: list, kwargs: dict) -> dict[str, Any]:
+def inflate_arguments(signature: dict[str, Any], args_parameter: Union[str, None], args_i: Union[int, None], args: list, kwargs: dict) -> dict[str, Any]:
     """Map arguments to their keywords or the keyword of the args parameter where necessary using the given mapping of a function's arguments to their default values and the name and index of the function's args parameter if such a parameter exists."""
     
     # Copy the signature to avoid modifying the original.
