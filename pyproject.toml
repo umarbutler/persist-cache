@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "local-cache"
+name = "persist-cache"
 version = "0.1.0"
 authors = [
   {name="Umar Butler", email="umar@umar.au"},
@@ -57,7 +57,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/umarbutler/local-cache"
-Documentation = "https://github.com/umarbutler/local-cache/blob/main/README.md"
-Issues = "https://github.com/umarbutler/local-cache/issues"
-Source = "https://github.com/umarbutler/local-cache"
+Homepage = "https://github.com/umarbutler/persist-cache"
+Documentation = "https://github.com/umarbutler/persist-cache/blob/main/README.md"
+Issues = "https://github.com/umarbutler/persist-cache/issues"
+Source = "https://github.com/umarbutler/persist-cache"

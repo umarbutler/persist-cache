@@ -1,11 +1,11 @@
-"""Test local-cache."""
+"""Test persist-cache."""
 import os
 import random
 import shutil
 import time
 from typing import Callable, Union
 
-import local_cache
+import persist_cache
 
 
 def _time_consuming_function(
@@ -96,29 +96,29 @@ def _test_cached_function(cached_function: Callable, dir: str = None, expiry: in
         cached_function.delete_cache()
         assert not os.path.exists(dir)
 
-def test_local_cache() -> None:
-    """Test `local_cache.local_cache()`."""
+def test_persist_cache() -> None:
+    """Test `persist_cache.persist_cache()`."""
     
     # Cache and test the time-consuming function without arguments.
-    cached_function = local_cache.cache(_time_consuming_function)
+    cached_function = persist_cache.cache(_time_consuming_function)
     print('Testing the caching of the time-consuming function without arguments.')
     _test_cached_function(cached_function)
     
     # Cache and test the time-consuming function with arguments.
-    cached_function = local_cache.cache()(_time_consuming_function)
+    cached_function = persist_cache.cache()(_time_consuming_function)
     print('Testing the caching of the time-consuming function with arguments.')
     _test_cached_function(cached_function)
     
     # Cache and test the time-consuming function with a time-to-live.
-    cached_function = local_cache.cache(expiry=1)(_time_consuming_function)
+    cached_function = persist_cache.cache(expiry=1)(_time_consuming_function)
     print('Testing the caching of the time-consuming function with a time-to-live.')
     _test_cached_function(cached_function, expiry=1)
     
     # Cache and test the time-consuming function with a custom directory.
-    cached_function = local_cache.cache(dir='.custom_cache')(_time_consuming_function)
+    cached_function = persist_cache.cache(dir='.custom_cache')(_time_consuming_function)
     print('Testing the caching of the time-consuming function with a custom directory.')
     _test_cached_function(cached_function, dir='.custom_cache')
     
     # Remove cache directories.
-    for dir in {'.local_cache', '.custom_cache'}:
+    for dir in {'.persist_cache', '.custom_cache'}:
         shutil.rmtree(dir, ignore_errors=True)

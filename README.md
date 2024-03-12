@@ -1,10 +1,10 @@
-# local-cache
-<a href="https://pypi.org/project/local-cache/" alt="PyPI Version"><img src="https://img.shields.io/pypi/v/local-cache"></a> <a href="https://github.com/umarbutler/local-cache/actions/workflows/ci.yml" alt="Build Status"><img src="https://img.shields.io/github/actions/workflow/status/umarbutler/local-cache/ci.yml?branch=main"></a> <a href="https://app.codecov.io/gh/umarbutler/local-cache" alt="Code Coverage"><img src="https://img.shields.io/codecov/c/github/umarbutler/local-cache"></a> <!-- <a href="https://pypistats.org/packages/local-cache" alt="Downloads"><img src="https://img.shields.io/pypi/dm/local-cache"></a> -->
+# persist-cache
+<a href="https://pypi.org/project/persist-cache/" alt="PyPI Version"><img src="https://img.shields.io/pypi/v/persist-cache"></a> <a href="https://github.com/umarbutler/persist-cache/actions/workflows/ci.yml" alt="Build Status"><img src="https://img.shields.io/github/actions/workflow/status/umarbutler/persist-cache/ci.yml?branch=main"></a> <a href="https://app.codecov.io/gh/umarbutler/persist-cache" alt="Code Coverage"><img src="https://img.shields.io/codecov/c/github/umarbutler/persist-cache"></a> <!-- <a href="https://pypistats.org/packages/persist-cache" alt="Downloads"><img src="https://img.shields.io/pypi/dm/persist-cache"></a> -->
 
-`local-cache` is an *easy-to-use* Python library for lightning-fast persistent function caching. It is capable of caching both synchronous and asynchronous functions as well as methods, and is also process-safe and thread-safe.
+`persist-cache` is an *easy-to-use* Python library for lightning-fast persistent function caching. It is capable of caching both synchronous and asynchronous functions as well as methods, and is also process-safe and thread-safe.
 
 ## Features 🎯
-- **⚡ Lightning-fast**: `local-cache` can cache a function call in 400 nanoseconds and return it back in a single millisecond.
+- **⚡ Lightning-fast**: `persist-cache` can cache a function call in 400 nanoseconds and return it back in a single millisecond.
 - **💽 Persistent**: cached returns persist across sessions and are stored locally.
 - **⌛ Stale-free**: cached returns may be given shelf lives, after which they will be automatically flushed out.
 - **🦺 Process- and thread-safe**: interprocess file locks prevent processes and threads from writing over each other.
@@ -12,15 +12,15 @@
 - **👨‍🏫 Class-compatible**: methods can be cached with the same decorator as functions (although the `self` argument will always be ignored).
 
 ## Installation 📦
-`local-cache` may be installed with `pip`:
+`persist-cache` may be installed with `pip`:
 ```bash
-pip install local-cache
+pip install persist-cache
 ```
 
 ## Usage 👩‍💻
-The code snippet below demonstrates how both synchronous and asynchronous functions as well as methods can be cached with `local-cache`:
+The code snippet below demonstrates how both synchronous and asynchronous functions as well as methods can be cached with `persist-cache`:
 ```python
-from local_cache import cache
+from persist_cache import cache
 
 @cache
 def my_function(): ...
@@ -68,7 +68,7 @@ The function to be cached must accept and return [dillable](https://dill.readthe
     
 `name` represents the name of the cache (or, if `cache()` is being called as an argument-less decorator (ie, as `@cache` instead of `@cache(...)`), the function to be cached). It defaults to the hash of the qualified name of the function. If `dir` is set, `name` will be ignored.
 
-`dir` represents the directory in which the cache should be stored. It defaults to a subdirectory bearing the name of the cache in a parent folder called '.local_cache' in the current working directory.
+`dir` represents the directory in which the cache should be stored. It defaults to a subdirectory bearing the name of the cache in a parent folder called '.persist_cache' in the current working directory.
         
 `expiry` represents how long, in seconds or as a `timedelta`, function calls should persist in the cache. It defaults to `None`.
 
@@ -81,4 +81,4 @@ After being wrapped, the cached function will have the following methods attache
 - `delete_cache() -> None`: Deletes the cache.
 
 ## License 📜
-This library is licensed under the [MIT License](https://github.com/umarbutler/local-cache/blob/main/LICENCE).
+This library is licensed under the [MIT License](https://github.com/umarbutler/persist-cache/blob/main/LICENCE).
