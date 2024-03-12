@@ -1,10 +1,9 @@
-from types import NoneType
 from typing import Any
 
 import dill as pickle
 import msgspec
 
-Msgpackables = str | int | list | dict | bool | float | NoneType
+Msgpackables = str | int | list | dict | bool | float | type(None)
 """Types that are directly msgpackable."""
 
 # Initialise msgpack encoders and decoders once to speed up subsequent serialization and deserialization.
@@ -43,7 +42,7 @@ BYTEARRAY_SIGNATURE_LEN = len(BYTEARRAY_SIGNATURE)
 STR_SIGNATURES = (PICKLE_SIGNATURE, BYTES_SIGNATURE, BYTEARRAY_SIGNATURE)
 """The signatures of data types that are serialized as strings."""
 
-ABSOLUTELY_DIRECTLY_MSGPACKABLE_TYPES = (bool, float, NoneType, bytes, bytearray, memoryview)
+ABSOLUTELY_DIRECTLY_MSGPACKABLE_TYPES = (bool, float, type(None), bytes, bytearray, memoryview)
 """Types that are absolutely directly msgpackable."""
 
 def directly_msgpackable(data: Any) -> bool:

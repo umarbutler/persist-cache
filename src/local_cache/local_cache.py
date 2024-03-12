@@ -1,9 +1,9 @@
 import asyncio
 import inspect
 import os
+from datetime import timedelta
 from functools import wraps
 from typing import Any, Callable
-from datetime import timedelta
 
 from . import caching
 from .caching import NOT_IN_CACHE
