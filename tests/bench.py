@@ -56,39 +56,36 @@ cachers = {
     'persist-cache': (
         persist_cache.cache(time_consuming_function),
         lambda cache: cache.clear_cache(),
-        '.persist_cache',
+        lambda: '.persist_cache',
     ),
 
     'cachier': (
         cachier.cachier(cache_dir='.cachier')(time_consuming_function),
         lambda cache: cache.clear_cache(),
-        '.cachier',
+        lambda: '.cachier',
     ),
     
     'joblib': (
         memory.cache(time_consuming_function),
         lambda _: memory.clear(),
-        '.joblib',
+        lambda: '.joblib',
     ),
     
     'locache': (
         locache.persist(time_consuming_function),
-        lambda _: shutil.rmtree('bench.cache', ignore_errors=True) if os.path.exists('bench.cache') else None,
-        'bench.cache',
+        lambda _: shutil.rmtree(dot_cache_dirs[0], ignore_errors=True) if (dot_cache_dirs:=[dir for dir in os.listdir() if dir.endswith('.cache')]) else None,
+        lambda: [dir for dir in os.listdir() if dir.endswith('.cache')][0],
     )
 }
 
 if __name__ == '__main__':
     benchmarks = []
-    iterations = 1000
+    iterations = 100
     
     uncached_time = time_function(time_consuming_function, iterations)/iterations
     
     for cacher, (func, emptier, dir) in cachers.items():
-        print(f'=== {cacher} ===')
-        # Empty the cache.
-        emptier(func)
-        
+        print(f'=== {cacher} ===')        
         # Time how long it take to cache a function call.
         set_time = time_function(func, iterations)
         print(f'Average set time: {(set_time/iterations)-uncached_time} seconds')
@@ -98,6 +95,9 @@ if __name__ == '__main__':
         print(f'Average get time: {get_time/iterations} seconds')
 
         # Get the size of the cache.
-        print(f'Bytes used: {get_size(dir)}')
+        print(f'Bytes used: {get_size(dir())}')
         
         print()
+
+        # Empty the cache.
+        emptier(func)
