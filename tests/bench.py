@@ -1,8 +1,8 @@
 """Benchmark persist-cache against other popular persistent caching libraries."""
-import random
-import time
 import os
+import random
 import shutil
+import time
 from typing import Callable
 
 import cachier
