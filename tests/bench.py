@@ -54,7 +54,7 @@ cachers = {
 
 if __name__ == '__main__':
     benchmarks = []
-    iterations = 10000
+    iterations = 5000
     
     uncached_time = time_function(time_consuming_function, iterations)/iterations
     
