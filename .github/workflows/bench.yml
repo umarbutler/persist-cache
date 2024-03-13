@@ -30,6 +30,7 @@ jobs:
         python -m pip install pytest-cov
         python -m pip install cachier
         python -m pip install locache
+        python -m pip install joblib
 
     - name: Install persist-cache
       run: |
