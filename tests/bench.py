@@ -56,31 +56,31 @@ cachers = {
     'persist-cache': (
         persist_cache.cache(time_consuming_function),
         lambda cache: cache.clear_cache(),
-        lambda: '.persist_cache',
+        '.persist_cache',
     ),
 
     'cachier': (
         cachier.cachier(cache_dir='.cachier')(time_consuming_function),
         lambda cache: cache.clear_cache(),
-        lambda: '.cachier',
+        '.cachier',
     ),
     
     'joblib': (
         memory.cache(time_consuming_function),
         lambda _: memory.clear(),
-        lambda: '.joblib',
+        '.joblib',
     ),
     
     'locache': (
         locache.persist(time_consuming_function),
-        lambda _: shutil.rmtree(dot_cache_dirs[0], ignore_errors=True) if (dot_cache_dirs:=[dir for dir in os.listdir() if dir.endswith('.cache')]) else None,
-        lambda: [dir for dir in os.listdir() if dir.endswith('.cache')][0],
+        lambda _: shutil.rmtree(locache._prepare_cache_location(time_consuming_function), ignore_errors=True) if os.path.exists(locache._prepare_cache_location(time_consuming_function)) else None,
+        locache._prepare_cache_location(time_consuming_function),
     )
 }
 
 if __name__ == '__main__':
     benchmarks = []
-    iterations = 100
+    iterations = 10000
     
     uncached_time = time_function(time_consuming_function, iterations)/iterations
     
@@ -95,7 +95,7 @@ if __name__ == '__main__':
         print(f'Average get time: {get_time/iterations} seconds')
 
         # Get the size of the cache.
-        print(f'Bytes used: {get_size(dir())}')
+        print(f'Bytes used: {get_size(dir)}')
         
         print()
 
