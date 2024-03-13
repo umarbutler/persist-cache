@@ -1,0 +1,40 @@
+name: bench
+
+on:
+  push:
+    branches: [ bench ]
+  pull_request:
+    branches: [ bench ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12"]
+
+    steps:
+    - name: Check-out repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install benchmarking dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install pytest
+        python -m pip install pytest-cov
+        python -m pip install cachier
+        python -m pip install locache
+
+    - name: Install persist-cache
+      run: |
+        python -m pip install .
+
+    - name: Run the benchmarks
+      run: |
+        python tests/bench.py
