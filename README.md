@@ -9,7 +9,7 @@
 - **⌛ Stale-free**: cached returns may be given shelf lives, after which they will be automatically flushed out.
 - **🦺 Process- and thread-safe**: interprocess file locks prevent processes and threads from writing over each other.
 - **⏱️ Async-compatible**: asynchronous functions can be cached with the same decorator as synchronous ones.
-- **👨‍🏫 Class-compatible**: methods can be cached with the same decorator as functions (although the `self` argument will always be ignored).
+- **👨‍🏫 Class-compatible**: methods can be cached with the same decorator as functions (although the `self` argument is always ignored).
 
 ## Installation 📦
 `persist-cache` may be installed with `pip`:
