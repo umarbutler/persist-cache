@@ -8,8 +8,8 @@ All notable changes to `persist-cache` will be documented here. This project adh
 - Added unit tests for the caching of synchronous methods.
 
 ### Fixed
-- Fixed `cache()`'s inability to identify certain wrapped asynchronous functions and methods as being asynchronous (#1) (fe7aa6ccd2f7fbeebaa53e4c1cc0230f6ef35cb4).
-- Fixed `cache()`'s inability to cache function calls returning `bytes`, `bytearray` and `memoryview` objects (#2) (f763ce7040c8048112dc93b59991bbcf943cc33a).
+- Fixed `cache()`'s inability to identify certain wrapped asynchronous functions and methods as being asynchronous ([#1](https://github.com/umarbutler/persist-cache/issues/1)) ([fe7aa6c](https://github.com/umarbutler/persist-cache/commit/fe7aa6ccd2f7fbeebaa53e4c1cc0230f6ef35cb4)).
+- Fixed `cache()`'s inability to cache function calls returning `bytes`, `bytearray` and `memoryview` objects ([#2](https://github.com/umarbutler/persist-cache/issues/2)) ([f763ce7](https://github.com/umarbutler/persist-cache/commit/f763ce7040c8048112dc93b59991bbcf943cc33a)).
 
 ## [0.1.0] - 2024-03-12
 ### Added
