@@ -28,6 +28,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install pytest
         python -m pip install pytest-cov
+        python -m pip install pytest-asyncio
 
     - name: Install persist-cache
       run: |
