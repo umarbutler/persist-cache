@@ -11,7 +11,7 @@
 - **⏱️ Async-compatible**: asynchronous functions can be cached with the same decorator as synchronous ones.
 - **👨‍🏫 Class-compatible**: methods can be cached with the same decorator as functions (although the `self` argument is always ignored).
 
-## Installation 📦
+## Installation 🧑‍🔧
 `persist-cache` may be installed with `pip`:
 ```bash
 pip install persist-cache
