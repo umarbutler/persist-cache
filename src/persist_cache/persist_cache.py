@@ -7,7 +7,7 @@ from typing import Any, Callable, Union
 
 from . import caching
 from .caching import NOT_IN_CACHE
-from .helpers import inflate_arguments, signaturize
+from .helpers import inflate_arguments, is_async, signaturize
 
 
 def cache(
@@ -88,7 +88,7 @@ def cache(
             return value
         
         # Identify the appropriate wrapper for the function by checking whether it is asynchronous or not.
-        wrapper = async_wrapper if asyncio.iscoroutinefunction(func) else sync_wrapper
+        wrapper = async_wrapper if is_async(func) else sync_wrapper
         
         # Attach convenience functions to the wrapper for modifying the cache.
         def delete_cache() -> None:

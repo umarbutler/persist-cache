@@ -1,4 +1,5 @@
 import inspect
+import re
 from typing import Any, Callable, Union
 
 
@@ -42,3 +43,26 @@ def inflate_arguments(signature: dict[str, Any], args_parameter: Union[str, None
     arguments |= kwargs
     
     return arguments
+
+def is_async(func: Callable) -> bool:
+    """Determine whether a callable is asynchronous."""
+    
+    # If `inspect.iscoroutinefunction` identifies the callable as asynchronous, then return `True`. If it doesn't, then try to search for a line that begins (ignoring preceeding whitespace) with `async def` followed by the callable's name and a `(` character inside its source code, returning `True` if such a line is found and there is no such line beginning with `def` (indicating that asynchronous and synchronous functions with the same name were defined in the same block as the callable).
+    if inspect.iscoroutinefunction(func):
+        return True
+    
+    try:
+        source = inspect.getsource(func)
+        
+    except (OSError, TypeError):
+        return False
+
+    has_async_def = re.search(r'^\s*async\s+def\s+' + re.escape(func.__name__) + r'\s*\(', source, re.MULTILINE)
+    
+    if has_async_def:    
+        has_sync_def = re.search(r'^\s*def\s+' + re.escape(func.__name__) + r'\s*\(', source, re.MULTILINE)
+        
+        if not has_sync_def:
+            return True
+
+    return False
