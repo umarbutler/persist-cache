@@ -42,7 +42,7 @@ BYTEARRAY_SIGNATURE_LEN = len(BYTEARRAY_SIGNATURE)
 STR_SIGNATURES = (PICKLE_SIGNATURE, BYTES_SIGNATURE, BYTEARRAY_SIGNATURE)
 """The signatures of data types that are serialized as strings."""
 
-ABSOLUTELY_DIRECTLY_MSGPACKABLE_TYPES = (bool, float, type(None), bytes, bytearray, memoryview)
+ABSOLUTELY_DIRECTLY_MSGPACKABLE_TYPES = (bool, float, type(None),)
 """Types that are absolutely directly msgpackable."""
 
 def directly_msgpackable(data: Any) -> bool:
