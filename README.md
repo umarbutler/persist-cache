@@ -31,6 +31,9 @@ async def my_function(): ...
 class MyClass:
     @cache
     def my_method(self): ...
+
+    @cache
+    async def my_method(self): ...
 ```
 
 It is also possible to name caches and specify their shelf lives:
@@ -80,5 +83,5 @@ After being wrapped, the cached function will have the following methods attache
 - `clear_cache() -> None`: Clears out all cached returns.
 - `delete_cache() -> None`: Deletes the cache.
 
-## License 📜
-This library is licensed under the [MIT License](https://github.com/umarbutler/persist-cache/blob/main/LICENCE).
+## Licence 📜
+This library is licensed under the [MIT Licence](https://github.com/umarbutler/persist-cache/blob/main/LICENCE).
