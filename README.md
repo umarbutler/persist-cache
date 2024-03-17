@@ -6,7 +6,7 @@
 ## Features 🎯
 - **⚡ Lightning-fast**: a function call can be cached in as little as 145 microseconds and be returned back in as few as 95 microseconds.
 - **💽 Persistent**: cached returns persist across sessions and are stored locally.
-- **⌛ Stale-free**: cached returns may be given shelf lives, after which they will be automatically flushed out.
+- **⌛ Stale-free**: cached returns may be given a shelf life, after which they will be automatically flushed out.
 - **🦺 Process- and thread-safe**: interprocess file locks prevent processes and threads from writing over each other.
 - **⏱️ Async-compatible**: asynchronous functions can be cached with the same decorator as synchronous ones.
 - **👨‍🏫 Class-compatible**: methods can be cached with the same decorator as functions (although the `self` argument is always ignored).
@@ -18,7 +18,7 @@ pip install persist-cache
 ```
 
 ## Usage 👩‍💻
-The code snippet below demonstrates how both synchronous and asynchronous functions as well as methods can be cached with `persist-cache`:
+The code snippet below demonstrates how both synchronous and asynchronous functions as well as methods may be cached with `persist-cache`:
 ```python
 from persist_cache import cache
 
@@ -36,7 +36,7 @@ class MyClass:
     async def my_method(self): ...
 ```
 
-It is also possible to name caches and specify their shelf lives:
+It is also possible to name caches and specify their shelf life:
 ```python
 from datetime import timedelta
 
@@ -47,7 +47,7 @@ def my_function(): ...
 def my_other_function(): ...
 ```
 
-Once created, cached functions can be managed as follows:
+Once created, cached functions may be managed as follows:
 ```python
 my_function.set_expiry(60 * 60) # Change cached returns to expire after an hour.
 my_function.flush_cache() # Flush out any expired cached returns.
