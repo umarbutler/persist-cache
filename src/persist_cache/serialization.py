@@ -1,7 +1,7 @@
 from typing import Any, Union
 
-import dill as pickle
 import msgspec
+import pickle
 
 Msgpackables = Union[str, int, list, dict, bool, float, None]
 """Types that are directly msgpackable."""
