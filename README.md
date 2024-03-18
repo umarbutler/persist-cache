@@ -6,7 +6,7 @@
 ## Features 🎯
 - **⚡ Lightning-fast**: a function call can be cached in as little as 145 microseconds and be returned back in as few as 95 microseconds.
 - **💽 Persistent**: cached returns persist across sessions and are stored locally.
-- **⌛ Stale-free**: cached returns may be given shelf lives, after which they will be automatically flushed out.
+- **⌛ Stale-free**: cached returns may be given a shelf life, after which they will be automatically flushed out.
 - **🦺 Process- and thread-safe**: interprocess file locks prevent processes and threads from writing over each other.
 - **⏱️ Async-compatible**: asynchronous functions can be cached with the same decorator as synchronous ones.
 - **👨‍🏫 Class-compatible**: methods can be cached with the same decorator as functions (although the `self` argument is always ignored).
@@ -18,7 +18,7 @@ pip install persist-cache
 ```
 
 ## Usage 👩‍💻
-The code snippet below demonstrates how both synchronous and asynchronous functions as well as methods can be cached with `persist-cache`:
+The code snippet below demonstrates how both synchronous and asynchronous functions as well as methods may be cached with `persist-cache`:
 ```python
 from persist_cache import cache
 
@@ -31,9 +31,12 @@ async def my_function(): ...
 class MyClass:
     @cache
     def my_method(self): ...
+
+    @cache
+    async def my_method(self): ...
 ```
 
-It is also possible to name caches and specify their shelf lives:
+It is also possible to name caches and specify their shelf life:
 ```python
 from datetime import timedelta
 
@@ -44,7 +47,7 @@ def my_function(): ...
 def my_other_function(): ...
 ```
 
-Once created, cached functions can be managed as follows:
+Once created, cached functions may be managed as follows:
 ```python
 my_function.set_expiry(60 * 60) # Change cached returns to expire after an hour.
 my_function.flush_cache() # Flush out any expired cached returns.
@@ -80,5 +83,5 @@ After being wrapped, the cached function will have the following methods attache
 - `clear_cache() -> None`: Clears out all cached returns.
 - `delete_cache() -> None`: Deletes the cache.
 
-## License 📜
-This library is licensed under the [MIT License](https://github.com/umarbutler/persist-cache/blob/main/LICENCE).
+## Licence 📜
+This library is licensed under the [MIT Licence](https://github.com/umarbutler/persist-cache/blob/main/LICENCE).
