@@ -5,6 +5,13 @@ All notable changes to `persist-cache` will be documented here. This project adh
 ### Added
 - Stale calls are now flushed when initialising a cache.
 
+### Changed
+- Switched hashing algorithm from `XXH3` to `XXH128` and began suffixing hashes with the length of their input to significantly reduce the already very low likelihood of hash collisions.
+- Pickle data is now compressed with LZ4 to speed up IO and reduce disk usage.
+
+### Removed
+- Removed unused import of `asyncio` in `persist_cache.py`.
+
 ## [0.1.1] - 2024-03-14
 ### Added
 - Added a unit test for passing a custom name to `cache()`.
