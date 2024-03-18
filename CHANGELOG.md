@@ -1,6 +1,10 @@
 ## Changelog 🔄
 All notable changes to `persist-cache` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+### Added
+- Stale calls are now flushed when initialising a cache.
+
 ## [0.1.1] - 2024-03-14
 ### Added
 - Added a unit test for passing a custom name to `cache()`.

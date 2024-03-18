@@ -47,6 +47,10 @@ def cache(
         if not os.path.exists(dir):
             os.makedirs(dir, exist_ok=True)
         
+        # If an expiry has been set, flush out any expired cached returns.
+        if expiry is not None:
+            caching.flush(dir, expiry)
+        
         # Flag whether the function is a method to enable the exclusion of the first argument (which will be the instance of the function's class) from being hashed to produce the cache key.
         is_method = inspect.ismethod(func)
         
