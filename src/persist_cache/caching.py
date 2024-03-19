@@ -56,7 +56,7 @@ def hash(data: Any) -> str:
     data = serialize(data)
     
     # Hash the data and affix its length, preceded by a hyphen (to reduce the likelihood of collisions).
-    return f'{xxh3_128_hexdigest(data)}-{len(data)}'
+    return f'{xxh3_128_hexdigest(data)}{len(data)}'
 
 def delete(dir: str) -> None:
     """Delete the provided cache."""
