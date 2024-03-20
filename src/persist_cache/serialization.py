@@ -56,7 +56,7 @@ def directly_msgpackable(data: Any) -> bool:
     # - It is of a type specified by `ABSOLUTELY_DIRECTLY_MSGPACKABLE_TYPES`.
     if (isinstance(data, str) and not any(data.startswith(str_signature) for str_signature in STR_SIGNATURES)) \
         or isinstance(data, int) and -2**63 <= data <= 2**64-1 \
-        or (isinstance(data, list) and all(directly_msgpackable(d) for d in data) and (len(data) == 0 or data[0] not in LISTED_SIGNATURES)) \
+        or (isinstance(data, list) and all(directly_msgpackable(d) for d in data) and (len(data) == 0 or not isinstance(data[0], str) or data[0] not in LISTED_SIGNATURES)) \
         or (isinstance(data, dict) and all(directly_msgpackable(k) and directly_msgpackable(v) for k, v in data.items())) \
         or isinstance(data, ABSOLUTELY_DIRECTLY_MSGPACKABLE_TYPES):
         return True
