@@ -1,6 +1,10 @@
 ## Changelog 🔄
 All notable changes to `persist-cache` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2024-03-20
+### Fixed
+- Fixed a bug causing `cache()` to raise a `TypeError` when attempting to cache a function call that contains an argument that is a list containing a dictionary ([#3](https://github.com/umarbutler/persist-cache/issues/3)) ([ec07874](https://github.com/umarbutler/persist-cache/commit/ec07874)).
+
 ## [0.3.0] - 2024-03-19
 ### Changed
 - Ceased delimiting hashes and the length of the input with hyphens as the hashes already have a fixed size so there is no possibility of collision.
