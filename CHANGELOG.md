@@ -3,7 +3,7 @@ All notable changes to `persist-cache` will be documented here. This project adh
 
 ## [0.3.1] - 2024-03-20
 ### Fixed
-- Fixed a bug causing `cache()` to raise a `TypeError` when attempting to cache a function call that contains an argument that is a list containing a dictionary ([#3](https://github.com/umarbutler/persist-cache/issues/3)) ([fe7aa6c](https://github.com/umarbutler/persist-cache/commit/fe7aa6ccd2f7fbeebaa53e4c1cc0230f6ef35cb4)).
+- Fixed a bug causing `cache()` to raise a `TypeError` when attempting to cache a function call that contains an argument that is a list containing a dictionary ([#3](https://github.com/umarbutler/persist-cache/issues/3)) ([ec07874](https://github.com/umarbutler/persist-cache/commit/ec07874)).
 
 ## [0.3.0] - 2024-03-19
 ### Changed
