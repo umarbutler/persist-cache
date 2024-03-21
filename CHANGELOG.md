@@ -1,6 +1,10 @@
 ## Changelog 🔄
 All notable changes to `persist-cache` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2024-03-21
+### Changed
+- Began hashing the names of caches with `XXH3` to ensure caches may be assigned any arbitrary name, regardless of whether it is compatible with the local file system.
+
 ## [0.3.1] - 2024-03-20
 ### Fixed
 - Fixed a bug causing `cache()` to raise a `TypeError` when attempting to cache a function call that contains an argument that is a list containing a dictionary ([#4](https://github.com/umarbutler/persist-cache/issues/4)) ([ec07874](https://github.com/umarbutler/persist-cache/commit/ec07874)).

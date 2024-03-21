@@ -69,9 +69,9 @@ def cache(
     
 The function to be cached must accept and return [dillable](https://dill.readthedocs.io/en/latest/) objects only (with the exception of methods' `self` argument, which is always ignored). Additionally, for consistent caching across subsequent sessions, arguments and returns should also be hashable.
     
-`name` represents the name of the cache (or, if `cache()` is being called as an argument-less decorator (ie, as `@cache` instead of `@cache(...)`), the function to be cached). It defaults to the hash of the qualified name of the function. If `dir` is set, `name` will be ignored.
+`name` represents the name of the cache (or, if `cache()` is being called as an argument-less decorator (ie, as `@cache` instead of `@cache(...)`), the function to be cached). It defaults to the qualified name of the function. If `dir` is set, `name` will be ignored.
 
-`dir` represents the directory in which the cache should be stored. It defaults to a subdirectory bearing the name of the cache in a parent folder called '.persist_cache' in the current working directory.
+`dir` represents the directory in which the cache should be stored. It defaults to a subdirectory named after the hash of the cache's name in a parent folder named '.persist_cache' in the current working directory.
         
 `expiry` represents how long, in seconds or as a `timedelta`, function calls should persist in the cache. It defaults to `None`.
 
