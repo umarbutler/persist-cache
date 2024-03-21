@@ -19,9 +19,9 @@ def cache(
     The function to be cached must accept and return dillable objects only (with the exception of methods' `self` argument, which is always ignored). Additionally, for consistent caching across subsequent sessions, arguments and returns should also be hashable.
     
     Arguments:
-        name (`str | Callable`, optional): The name of the cache (or, if `cache()` is being called as an argument-less decorator (ie, as `@cache` instead of `@cache(...)`), the function to be cached). Defaults to the hash of the qualified name of the function. If `dir` is set, this argument will be ignored.
+        name (`str | Callable`, optional): The name of the cache (or, if `cache()` is being called as an argument-less decorator (ie, as `@cache` instead of `@cache(...)`), the function to be cached). Defaults to the qualified name of the function. If `dir` is set, this argument will be ignored.
         
-        dir (`str`, optional): The directory in which the cache should be stored. Defaults to a subdirectory bearing the name of the cache in a parent folder called '.persist_cache' in the current working directory.
+        dir (`str`, optional): The directory in which the cache should be stored. Defaults to a subdirectory named after the hash of the cache's name in a parent folder named '.persist_cache' in the current working directory.
         
         expiry (`int | float | timedelta`, optional): How long, in seconds or as a `timedelta`, function calls should persist in the cache. Defaults to `None`.
     
@@ -35,12 +35,11 @@ def cache(
     def decorator(func: Callable) -> Callable:
         nonlocal name, dir, expiry
         
-        # If the cache directory has not been set, and the name of the cache has, set it to a subdirectory by that name in a directory called '.persist_cache' in the current working directory, or, if the name of the cache has not been set, set the name of that subdirectory to the hash of the qualified name of the function.
+        # If the cache directory has not been set, and the name of the cache has, set it to a subdirectory by the name of the hash of that name in a directory named '.persist_cache' in the current working directory, or, if the name of the cache has not been set, set the name of that subdirectory to the hash of the qualified name of the function.
         if dir is None:
-            if name is not None:
-                dir = f'.persist_cache/{name}'
-            else:
-                dir = f'.persist_cache/{caching.hash(func.__qualname__)}'
+            name = name if name is not None else func.__qualname__
+            
+            dir = f'.persist_cache/{caching.shorthash(name)}'
 
         # Create the cache directory and any other necessary directories if it does not exist.
         if not os.path.exists(dir):

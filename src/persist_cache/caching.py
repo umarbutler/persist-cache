@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from typing import Any, Union
 
 from filelock import FileLock
-from xxhash import xxh3_128_hexdigest
+from xxhash import xxh3_64_hexdigest, xxh3_128_hexdigest
 
 from .serialization import deserialize, serialize
 
@@ -57,6 +57,15 @@ def hash(data: Any) -> str:
     
     # Hash the data and affix its length, preceded by a hyphen (to reduce the likelihood of collisions).
     return f'{xxh3_128_hexdigest(data)}{len(data)}'
+
+def shorthash(data: Any) -> str:
+    """Hash the given data."""
+    
+    # Serialise the data.
+    data = serialize(data)
+    
+    # Hash the data and affix its length, preceded by a hyphen (to reduce the likelihood of collisions).
+    return f'{xxh3_64_hexdigest(data)}{len(data)}'
 
 def delete(dir: str) -> None:
     """Delete the provided cache."""
