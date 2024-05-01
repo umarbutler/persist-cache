@@ -66,3 +66,8 @@ def is_async(func: Callable) -> bool:
             return True
 
     return False
+
+def is_generator(func: Callable) -> bool:
+    """Determine whether a callable is generator."""
+
+    return inspect.isgeneratorfunction(func)

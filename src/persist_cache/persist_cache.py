@@ -6,7 +6,7 @@ from typing import Any, Callable, Union
 
 from . import caching
 from .caching import NOT_IN_CACHE
-from .helpers import inflate_arguments, is_async, signaturize
+from .helpers import inflate_arguments, is_async, signaturize, is_generator
 
 
 def cache(
@@ -89,8 +89,30 @@ def cache(
             
             return value
         
+        def generator_wrapper(*args: tuple[Any], **kwargs: dict[str, Any]) -> Any:
+            nonlocal dir, expiry, is_method
+
+            # Map arguments to their keywords or the keyword of the args parameter where necessary, filtering out the first argument if the function is a method, to enable the consistent caching of function calls where positional arguments are used on some occasions and keyword arguments are used on others.
+            arguments = inflate_arguments(signature, args_parameter, args_i, args[is_method:], kwargs)
+            
+            # Hash the arguments to produce the cache key.
+            key = caching.hash(arguments)
+            
+            # Get the value of the key from the cache if it is not expired, otherwise, call the function and set the value of the key in the cache to the result of that call.
+            if (value := caching.get(key, dir, expiry)) is NOT_IN_CACHE:
+                value = []
+                for item in func(*args, **kwargs):
+                    value.append(item)
+                    yield item
+
+                caching.set(key, value, dir)
+                return
+
+            for item in value:            
+                yield item
+
         # Identify the appropriate wrapper for the function by checking whether it is asynchronous or not.
-        wrapper = async_wrapper if is_async(func) else sync_wrapper
+        wrapper = generator_wrapper if is_generator(func) else async_wrapper if is_async(func) else sync_wrapper
         
         # Attach convenience functions to the wrapper for modifying the cache.
         def delete_cache() -> None:
