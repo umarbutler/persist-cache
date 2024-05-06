@@ -171,3 +171,31 @@ def cache(
         return decorator(func)
     
     return decorator
+
+def delete(function_or_name: Union[str, Callable]) -> None:
+    """Delete the cache of the given function or name.
+    
+    Arguments:
+        function_or_name (`str | Callable`): The function or name of the cache to be deleted."""
+    
+    name = function_or_name if isinstance(function_or_name, str) else function_or_name.__qualname__
+    caching.delete(f'.persist_cache/{caching.shorthash(name)}')
+
+def clear(function_or_name: Union[str, Callable]) -> None:
+    """Clear the cache of the given function or name.
+    
+    Arguments:
+        function_or_name (`str | Callable`): The function or name of the cache to be cleared."""
+    
+    name = function_or_name if isinstance(function_or_name, str) else function_or_name.__qualname__
+    caching.clear(f'.persist_cache/{caching.shorthash(name)}')
+
+def flush(function_or_name: Union[str, Callable], expiry: Union[int, float, timedelta]) -> None:
+    """Flush expired keys from the cache of the given function or name.
+    
+    Arguments:
+        function_or_name (`str | Callable`): The function or name of the cache to be flushed.
+        expiry (`int | float | timedelta`): How long, in seconds or as a `timedelta`, function calls should persist in the cache."""
+    
+    name = function_or_name if isinstance(function_or_name, str) else function_or_name.__qualname__
+    caching.flush(f'.persist_cache/{caching.shorthash(name)}', expiry)

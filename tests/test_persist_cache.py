@@ -144,12 +144,21 @@ def _test_cached_function(cached_function: Callable, dir: str = None, expiry: in
     cached_result = cached_function(**data)
     cached_function.clear_cache()
     assert cached_function(**data) != cached_result
+    
+    cached_result = cached_function(**data)
+    persist_cache.clear(cached_function)
+    assert cached_function(**data) != cached_result
 
     # Test flushing the cache.
     if expiry:
         cached_result = cached_function(**data)
         time.sleep(expiry+1)
         cached_function.flush_cache()
+        assert cached_function(**data) != cached_result
+        
+        cached_result = cached_function(**data)
+        time.sleep(expiry+1)
+        persist_cache.flush(cached_function)
         assert cached_function(**data) != cached_result
 
     # Test setting the time-to-live of the cache.
@@ -161,6 +170,10 @@ def _test_cached_function(cached_function: Callable, dir: str = None, expiry: in
     # Test deleting the cache if the cache's directory is known.
     if dir:
         cached_function.delete_cache()
+        assert not os.path.exists(dir)
+        
+        os.makedirs(dir, exist_ok=True)
+        persist_cache.delete(cached_function)
         assert not os.path.exists(dir)
 
 async def _async_test_cached_function(cached_function: Callable, dir: str = None, expiry: int = None) -> None:
@@ -212,12 +225,21 @@ async def _async_test_cached_function(cached_function: Callable, dir: str = None
     cached_result = await cached_function(**data)
     cached_function.clear_cache()
     assert await cached_function(**data) != cached_result
+    
+    cached_result = await cached_function(**data)
+    persist_cache.clear(cached_function)
+    assert await cached_function(**data) != cached_result
 
     # Test flushing the cache.
     if expiry:
         cached_result = await cached_function(**data)
         time.sleep(expiry+1)
         cached_function.flush_cache()
+        assert await cached_function(**data) != cached_result
+        
+        cached_result = await cached_function(**data)
+        time.sleep(expiry+1)
+        persist_cache.flush(cached_function)
         assert await cached_function(**data) != cached_result
 
     # Test setting the time-to-live of the cache.
@@ -229,6 +251,10 @@ async def _async_test_cached_function(cached_function: Callable, dir: str = None
     # Test deleting the cache if the cache's directory is known.
     if dir:
         cached_function.delete_cache()
+        assert not os.path.exists(dir)
+        
+        os.makedirs(dir, exist_ok=True)
+        persist_cache.delete(cached_function)
         assert not os.path.exists(dir)
 
 async def _test_sync_and_async_time_consuming_function(_time_consuming_function: Callable, _async_time_consuming_function: Callable) -> None:
