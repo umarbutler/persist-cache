@@ -3,7 +3,7 @@ import os
 import random
 import shutil
 import time
-from typing import Callable, Union
+from typing import AsyncGenerator, Callable, Generator, Union
 
 import persist_cache
 
@@ -49,6 +49,18 @@ async def _async_time_consuming_function(
     """A time-consuming function."""
     
     return str_, int_, list_, dict_, tuple_, set_, frozenset_, bytes_, bytearray_, bool_, float_, none_, class_, recursive, random.random()
+
+def _time_consuming_generator_function(x: int) -> Generator[int, None, None]:
+    """A time-consuming generator function."""
+    
+    for i in range(x):
+        yield i
+
+async def _async_time_consuming_generator_function(x: int) -> AsyncGenerator[int, None, None]:
+    """A time-consuming generator function."""
+    
+    for i in range(x):
+        yield i
 
 class _TimeConsumingClass:
     def _time_consuming_function(
@@ -257,6 +269,24 @@ async def _async_test_cached_function(cached_function: Callable, dir: str = None
         persist_cache.delete(cached_function)
         assert not os.path.exists(dir)
 
+def _test_cached_generator_function(cached_generator_function: Callable, dir: str = None, expiry: int = None) -> None:
+    """Test a cached generator function."""
+    
+    # Initialise test data.
+    data = 10
+    
+    # Test the caching of the time-consuming generator function's responses to the test data.
+    assert list(cached_generator_function(data)) == list(cached_generator_function(data))
+ 
+async def _async_test_cached_generator_function(cached_generator_function: Callable, dir: str = None, expiry: int = None) -> None:
+    """Test an async cached generator function."""
+    
+    # Initialise test data.
+    data = 10
+    
+    # Test the caching of the time-consuming generator function's responses to the test data.
+    assert list(element async for element in cached_generator_function(data)) == list(element async for element in cached_generator_function(data))
+
 async def _test_sync_and_async_time_consuming_function(_time_consuming_function: Callable, _async_time_consuming_function: Callable) -> None:
     """Test a time-consuming function and its async equivalent."""
     
@@ -314,6 +344,16 @@ async def _test_sync_and_async_time_consuming_function(_time_consuming_function:
     cached_function = persist_cache.cache(name='.custom_function')(_async_time_consuming_function)
     print('Testing the caching of the async time-consuming function with a custom directory.')
     await _async_test_cached_function(cached_function, dir='.persist_cache/custom_function')
+    
+    # Cache and test the time-consuming generator function.
+    cached_generator_function = persist_cache.cache()(_time_consuming_generator_function)
+    print('Testing the caching of the time-consuming generator function.')
+    _test_cached_generator_function(cached_generator_function)
+    
+    # Cache and test the async time-consuming generator function.
+    cached_generator_function = persist_cache.cache()(_async_time_consuming_generator_function)
+    print('Testing the caching of the async time-consuming generator function.')
+    await _async_test_cached_generator_function(cached_generator_function)
     
     # Remove cache directories.
     for dir in {'.persist_cache', '.custom_cache'}:

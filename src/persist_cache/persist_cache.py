@@ -1,8 +1,7 @@
-import os
 import inspect
-
-from functools import wraps
+import os
 from datetime import timedelta
+from functools import wraps
 from typing import Any, Callable, Union
 
 from . import caching
@@ -113,12 +112,42 @@ def cache(
                 
                 return
 
-            for item in value:            
+            for item in value:
+                yield item
+        
+        # Initialise a wrapper for asynchronous generator functions.
+        async def async_generator_wrapper(*args: tuple[Any], **kwargs: dict[str, Any]) -> Any:
+            nonlocal dir, expiry, is_method
+
+            # Map arguments to their keywords or the keyword of the args parameter where necessary, filtering out the first argument if the function is a method, to enable the consistent caching of function calls where positional arguments are used on some occasions and keyword arguments are used on others.
+            arguments = inflate_arguments(signature, args_parameter, args_i, args[is_method:], kwargs)
+            
+            # Hash the arguments to produce the cache key.
+            key = caching.hash(arguments)
+            
+            # Get the value of the key from the cache if it is not expired, otherwise, call the function and set the value of the key in the cache to the result of that call.
+            if (value := caching.get(key, dir, expiry)) is NOT_IN_CACHE:
+                value = []
+                
+                async for item in func(*args, **kwargs):
+                    value.append(item)
+                    
+                    yield item
+
+                caching.set(key, value, dir)
+                
+                return
+
+            for item in value:
                 yield item
 
-        # Identify the appropriate wrapper for the function,
+        # Identify the appropriate wrapper for the function.
         if is_async(func):
-            wrapper = async_wrapper
+            if inspect.isasyncgenfunction(func):
+                wrapper = async_generator_wrapper
+            
+            else:
+                wrapper = async_wrapper
         
         elif inspect.isgeneratorfunction(func):
             wrapper = generator_wrapper
