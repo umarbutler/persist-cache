@@ -1,12 +1,13 @@
-import inspect
 import os
-from datetime import timedelta
+import inspect
+
 from functools import wraps
+from datetime import timedelta
 from typing import Any, Callable, Union
 
 from . import caching
 from .caching import NOT_IN_CACHE
-from .helpers import inflate_arguments, is_async, signaturize, is_generator
+from .helpers import inflate_arguments, is_async, signaturize
 
 
 def cache(
@@ -89,6 +90,7 @@ def cache(
             
             return value
         
+        # Initialise a wrapper for generator functions.
         def generator_wrapper(*args: tuple[Any], **kwargs: dict[str, Any]) -> Any:
             nonlocal dir, expiry, is_method
 
@@ -106,13 +108,21 @@ def cache(
                     yield item
 
                 caching.set(key, value, dir)
+                
                 return
 
             for item in value:            
                 yield item
 
-        # Identify the appropriate wrapper for the function by checking whether it is asynchronous or not.
-        wrapper = generator_wrapper if is_generator(func) else async_wrapper if is_async(func) else sync_wrapper
+        # Identify the appropriate wrapper for the function,
+        if is_async(func):
+            wrapper = async_wrapper
+        
+        elif inspect.isgeneratorfunction(func):
+            wrapper = generator_wrapper
+        
+        else:
+            wrapper = sync_wrapper
         
         # Attach convenience functions to the wrapper for modifying the cache.
         def delete_cache() -> None:
