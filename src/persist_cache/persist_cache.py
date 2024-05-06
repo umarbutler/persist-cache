@@ -103,8 +103,10 @@ def cache(
             # Get the value of the key from the cache if it is not expired, otherwise, call the function and set the value of the key in the cache to the result of that call.
             if (value := caching.get(key, dir, expiry)) is NOT_IN_CACHE:
                 value = []
+                
                 for item in func(*args, **kwargs):
                     value.append(item)
+                    
                     yield item
 
                 caching.set(key, value, dir)
@@ -143,8 +145,12 @@ def cache(
             
             caching.flush(dir, expiry)
         
-        def set_expiry(value: int) -> None:
-            """Set the expiry of the cache."""
+        def set_expiry(value: Union[int, float, timedelta, None]) -> None:
+            """Set the expiry of the cache.
+            
+            Arguments:
+                expiry (`int | float | timedelta`): How long, in seconds or as a `timedelta`, function calls should persist in the cache."""
+
             nonlocal expiry
             
             expiry = value
