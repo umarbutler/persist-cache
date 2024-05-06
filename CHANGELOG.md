@@ -1,6 +1,11 @@
 ## Changelog 🔄
 All notable changes to `persist-cache` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2024-05-06
+## Added
+- Added support for the caching of both synchronous and asynchronous generator functions.
+- Added `delete()`, `clear()` and `flush()` helper functions for deleting, clearing and flushing caches.
+
 ## [0.3.2] - 2024-03-21
 ### Changed
 - Began hashing the names of caches with `XXH3` to ensure caches may be assigned any arbitrary name, regardless of whether it is compatible with the local file system.
@@ -38,6 +43,8 @@ All notable changes to `persist-cache` will be documented here. This project adh
 ### Added
 - Added the `cache()` decorator, which locally and persistently caches functions.
 
+[0.4.0]: https://github.com/umarbutler/persist-cache/compare/v0.3.2...v0.4.0
+[0.3.2]: https://github.com/umarbutler/persist-cache/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/umarbutler/persist-cache/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/umarbutler/persist-cache/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/umarbutler/persist-cache/compare/v0.1.1...v0.2.0

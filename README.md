@@ -8,7 +8,7 @@
 - **💽 Persistent**: cached returns persist across sessions and are stored locally.
 - **⌛ Stale-free**: cached returns may be given a shelf life, after which they will be automatically flushed out.
 - **🦺 Process- and thread-safe**: interprocess file locks prevent processes and threads from writing over each other.
-- **⏱️ Async-compatible**: asynchronous functions can be cached with the same decorator as synchronous ones.
+- **⏱️ Async-compatible**: asynchronous functions can be cached with the same decorator as synchronous ones, generators included.
 - **👨‍🏫 Class-compatible**: methods can be cached with the same decorator as functions (although the `self` argument is always ignored).
 
 ## Installation 🧑‍🔧
@@ -49,10 +49,17 @@ def my_other_function(): ...
 
 Once created, cached functions may be managed as follows:
 ```python
-my_function.set_expiry(60 * 60) # Change cached returns to expire after an hour.
-my_function.flush_cache() # Flush out any expired cached returns.
-my_function.clear_cache() # Clear out all cached returns.
-my_function.delete_cache() # Delete the cache.
+# Change cached returns to expire after an hour.
+my_function.set_expiry(60 * 60)
+
+# Flush out any expired cached returns.
+my_function.flush_cache() or persist_cache.flush(my_function, 60 * 60) or persist_cache.flush('my_shared_cache', 60 * 60)
+
+# Clear out all cached returns.
+my_function.clear_cache() or persist_cache.clear(my_function) or persist_cache.clear('my_shared_cache')
+
+# Delete the cache.
+my_function.delete_cache() or persist_cache.delete(my_function) or persist_cache.delete('my_shared_cache')
 ```
 
 ## API 🧩
@@ -82,6 +89,36 @@ After being wrapped, the cached function will have the following methods attache
 - `flush_cache() -> None`: Flushes out any expired cached returns.
 - `clear_cache() -> None`: Clears out all cached returns.
 - `delete_cache() -> None`: Deletes the cache.
+
+### `flush()`
+```python
+def flush(
+    function_or_name: str | Callable,
+    expiry: int | float | timedelta,
+) -> None
+```
+
+`flush()` flushes out any expired cached returns from a cache.
+
+`function_or_name` represents the function or the name of the cache to be flushed.
+
+### `clear()`
+```python
+def clear(function_or_name: str | Callable) -> None
+```
+
+`clear()` clears out all cached returns from a cache.
+
+`function_or_name` represents the function or the name of the cache to be cleared.
+
+### `delete()`
+```python
+def delete(function_or_name: str | Callable) -> None
+```
+
+`delete()` deletes a cache.
+
+`function_or_name` represents the function or the name of the cache to be deleted.
 
 ## Licence 📜
 This library is licensed under the [MIT Licence](https://github.com/umarbutler/persist-cache/blob/main/LICENCE).
