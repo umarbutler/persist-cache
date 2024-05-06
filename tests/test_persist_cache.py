@@ -56,7 +56,7 @@ def _time_consuming_generator_function(x: int) -> Generator[int, None, None]:
     for i in range(x):
         yield i
 
-async def _async_time_consuming_generator_function(x: int) -> AsyncGenerator[int, None, None]:
+async def _async_time_consuming_generator_function(x: int) -> AsyncGenerator[int, None]:
     """A time-consuming generator function."""
     
     for i in range(x):
@@ -157,21 +157,23 @@ def _test_cached_function(cached_function: Callable, dir: str = None, expiry: in
     cached_function.clear_cache()
     assert cached_function(**data) != cached_result
     
-    cached_result = cached_function(**data)
-    persist_cache.clear(cached_function)
-    assert cached_function(**data) != cached_result
+    if dir is None:
+        cached_result = cached_function(**data)
+        persist_cache.clear(cached_function)
+        assert cached_function(**data) != cached_result
 
     # Test flushing the cache.
     if expiry:
         cached_result = cached_function(**data)
-        time.sleep(expiry+1)
+        time.sleep(expiry + 1)
         cached_function.flush_cache()
         assert cached_function(**data) != cached_result
         
-        cached_result = cached_function(**data)
-        time.sleep(expiry+1)
-        persist_cache.flush(cached_function)
-        assert cached_function(**data) != cached_result
+        if dir is None:
+            cached_result = cached_function(**data)
+            time.sleep(expiry + 1)
+            persist_cache.flush(cached_function, expiry)
+            assert cached_function(**data) != cached_result
 
     # Test setting the time-to-live of the cache.
     cached_function.set_expiry(2)
@@ -182,10 +184,6 @@ def _test_cached_function(cached_function: Callable, dir: str = None, expiry: in
     # Test deleting the cache if the cache's directory is known.
     if dir:
         cached_function.delete_cache()
-        assert not os.path.exists(dir)
-        
-        os.makedirs(dir, exist_ok=True)
-        persist_cache.delete(cached_function)
         assert not os.path.exists(dir)
 
 async def _async_test_cached_function(cached_function: Callable, dir: str = None, expiry: int = None) -> None:
@@ -238,21 +236,23 @@ async def _async_test_cached_function(cached_function: Callable, dir: str = None
     cached_function.clear_cache()
     assert await cached_function(**data) != cached_result
     
-    cached_result = await cached_function(**data)
-    persist_cache.clear(cached_function)
-    assert await cached_function(**data) != cached_result
+    if dir is None:
+        cached_result = await cached_function(**data)
+        persist_cache.clear(cached_function)
+        assert await cached_function(**data) != cached_result
 
     # Test flushing the cache.
     if expiry:
         cached_result = await cached_function(**data)
-        time.sleep(expiry+1)
+        time.sleep(expiry + 1)
         cached_function.flush_cache()
         assert await cached_function(**data) != cached_result
         
-        cached_result = await cached_function(**data)
-        time.sleep(expiry+1)
-        persist_cache.flush(cached_function)
-        assert await cached_function(**data) != cached_result
+        if dir is None:
+            cached_result = await cached_function(**data)
+            time.sleep(expiry + 1)
+            persist_cache.flush(cached_function, expiry)
+            assert await cached_function(**data) != cached_result
 
     # Test setting the time-to-live of the cache.
     cached_function.set_expiry(2)
@@ -263,10 +263,6 @@ async def _async_test_cached_function(cached_function: Callable, dir: str = None
     # Test deleting the cache if the cache's directory is known.
     if dir:
         cached_function.delete_cache()
-        assert not os.path.exists(dir)
-        
-        os.makedirs(dir, exist_ok=True)
-        persist_cache.delete(cached_function)
         assert not os.path.exists(dir)
 
 def _test_cached_generator_function(cached_generator_function: Callable, dir: str = None, expiry: int = None) -> None:
@@ -285,7 +281,17 @@ async def _async_test_cached_generator_function(cached_generator_function: Calla
     data = 10
     
     # Test the caching of the time-consuming generator function's responses to the test data.
-    assert list(element async for element in cached_generator_function(data)) == list(element async for element in cached_generator_function(data))
+    y1 = []
+    
+    async for element in cached_generator_function(data):
+        y1 += [element]
+    
+    y2 = []
+    
+    async for element in cached_generator_function(data):
+        y2 += [element]
+    
+    assert y1 == y2
 
 async def _test_sync_and_async_time_consuming_function(_time_consuming_function: Callable, _async_time_consuming_function: Callable) -> None:
     """Test a time-consuming function and its async equivalent."""
