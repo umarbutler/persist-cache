@@ -1,7 +1,8 @@
+from functools import wraps
+
 import dill as pickle
 import lz4.frame
 
-from functools import wraps
 
 @wraps(pickle.dumps)
 def dumps(*args, **kwargs):
