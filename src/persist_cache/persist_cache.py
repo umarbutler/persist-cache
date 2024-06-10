@@ -27,10 +27,11 @@ def cache(
     
     Returns:
         `Callable`: If `cache()` is called with arguments, a decorator that wraps the function to be cached, otherwise, the wrapped function itself. Once wrapped, the function will have the following methods attached to it:
-            - `set_expiry(value: int | float | timedelta) -> None`: Set the expiry of the cache.
-            - `flush_cache() -> None`: Flush out any expired cached returns.
-            - `clear_cache() -> None`: Clear out all cached returns.
-            - `delete_cache() -> None`: Delete the cache."""
+        
+        - `set_expiry(value: int | float | timedelta) -> None`: Set the expiry of the cache.
+        - `flush_cache() -> None`: Flush out any expired cached returns.
+        - `clear_cache() -> None`: Clear out all cached returns.
+        - `delete_cache() -> None`: Delete the cache."""
     
     def decorator(func: Callable) -> Callable:
         nonlocal name, dir, expiry
