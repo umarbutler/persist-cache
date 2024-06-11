@@ -366,7 +366,7 @@ async def _test_sync_and_async_time_consuming_function(_time_consuming_function:
         shutil.rmtree(dir, ignore_errors=True)
 
 async def test_persist_cache() -> None:
-    """Test `persist_cache.persist_cache()`."""
+    """Test `persist_cache.cache()`."""
     
     # Test the time-consuming function and its async equivalent.
     await _test_sync_and_async_time_consuming_function(_time_consuming_function, _async_time_consuming_function)
