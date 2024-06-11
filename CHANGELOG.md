@@ -1,6 +1,10 @@
 ## Changelog 🔄
 All notable changes to `persist-cache` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Fixed
+- Fixed typo in the docstring for the `test_persist_cache()` unit test in `test_persist_cache.py`.
+
 ## [0.4.1] - 2024-06-10
 ### Fixed
 - Fixed the formatting of the docstring of `cache()` because a portion of it was being rendered by Vscode as a single line instead of a bullet point list.
