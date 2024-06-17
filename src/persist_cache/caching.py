@@ -1,3 +1,4 @@
+import re
 import os
 import shutil
 from datetime import datetime, timedelta
@@ -87,6 +88,9 @@ def flush(dir: str, expiry: Union[int, float, timedelta, None]) -> None:
     
     # Iterate over keys in the cache.
     for file in os.listdir(dir):
+        if re.match(r'^.+\.lock$', file):
+            continue
+
         path = f'{dir}/{file}'
         
         # Lock the entry before reading it.
