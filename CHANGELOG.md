@@ -1,8 +1,9 @@
 ## Changelog 🔄
 All notable changes to `persist-cache` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.4.2] - 2024-06-18
 ### Fixed
+- Fixed a bug wherein `flush()` would try locking lock files ([#6](https://github.com/umarbutler/persist-cache/pull/6)).
 - Fixed typo in the docstring for the `test_persist_cache()` unit test in `test_persist_cache.py`.
 
 ## [0.4.1] - 2024-06-10
