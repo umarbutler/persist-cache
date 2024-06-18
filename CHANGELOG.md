@@ -52,7 +52,8 @@ All notable changes to `persist-cache` will be documented here. This project adh
 ### Added
 - Added the `cache()` decorator, which locally and persistently caches functions.
 
-[0.4.0]: https://github.com/umarbutler/persist-cache/compare/v0.4.0...v0.4.1
+[0.4.2]: https://github.com/umarbutler/persist-cache/compare/v0.4.1...v0.4.2
+[0.4.1]: https://github.com/umarbutler/persist-cache/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/umarbutler/persist-cache/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/umarbutler/persist-cache/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/umarbutler/persist-cache/compare/v0.3.0...v0.3.1
