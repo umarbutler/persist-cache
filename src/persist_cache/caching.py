@@ -87,7 +87,7 @@ def flush(dir: str, expiry: Union[int, float, timedelta, None]) -> None:
     
     # Iterate over keys in the cache.
     for file in os.listdir(dir):
-        if file.endswith('.msgpack'):
+        if not file.endswith('.msgpack'):
             continue
         
         path = f'{dir}/{file}'
