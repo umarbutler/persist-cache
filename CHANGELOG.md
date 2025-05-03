@@ -1,6 +1,10 @@
 ## Changelog 🔄
 All notable changes to `persist-cache` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.4] - 2025-05-03
+### Fixed
+- Fixed a bug making it impossible to handle expired cache records when using a `timedelta` as the expiry ([#8](https://github.com/umarbutler/persist-cache/issues/8)).
+
 ## [0.4.3] - 2024-06-19
 ### Fixed
 - Fixed a typo that caused the fix for [#6](https://github.com/umarbutler/persist-cache/pull/6) to not work and instead break `flush()`.

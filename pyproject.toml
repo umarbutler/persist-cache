@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "persist-cache"
-version = "0.4.3"
+version = "0.4.4"
 authors = [
   {name="Umar Butler", email="umar@umar.au"},
 ]
@@ -64,3 +64,17 @@ Source = "https://github.com/umarbutler/persist-cache"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    'src/persist_cache/__init__.py',
+    'src/persist_cache/py.typed',
+    'src/persist_cache/persist_cache.py',
+    'src/persist_cache/caching.py',
+    'src/persist_cache/helpers.py',
+    'src/persist_cache/pickle.py',
+    'src/persist_cache/serialization.py',
+    'pyproject.toml',
+    'README.md',
+    'LICENSE',
+]

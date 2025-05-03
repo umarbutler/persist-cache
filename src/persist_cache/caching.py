@@ -35,14 +35,14 @@ def get(key: str, dir: str, expiry: Union[int, float, timedelta, None] = None) -
         # Handle expiry if necessary.
         if expiry is not None:
             # Get the time at which the key was last set.
-            timestamp = os.path.getmtime(path)
-
+            timestamp = datetime.fromtimestamp(os.path.getmtime(path))
+            delta = expiry if isinstance(expiry, timedelta) else timedelta(seconds=expiry)
+            
             # If the entry is expired, remove it from the cache and return `NOT_IN_CACHE`.
-            if isinstance(expiry, timedelta) and datetime.fromtimestamp(timestamp) + expiry < datetime.now() \
-            or timestamp + expiry < datetime.now().timestamp():
+            if timestamp + delta < datetime.now():
                 # Remove the entry.
                 os.remove(path)
-
+                
                 return NOT_IN_CACHE
         
         # Read, deserialize and return the value.
@@ -85,6 +85,13 @@ def clear(dir: str) -> None:
 def flush(dir: str, expiry: Union[int, float, timedelta, None]) -> None:
     """Flush expired keys from the provided cache."""
     
+    # If no expiry was provided, do nothing.
+    if expiry is None:
+        return
+    
+    # Convert the expiry to a timedelta if it is not already.
+    delta = expiry if isinstance(expiry, timedelta) else timedelta(seconds=expiry)
+    
     # Iterate over keys in the cache.
     for file in os.listdir(dir):
         if not file.endswith('.msgpack'):
@@ -95,9 +102,9 @@ def flush(dir: str, expiry: Union[int, float, timedelta, None]) -> None:
         # Lock the entry before reading it.
         with FileLock(f'{path}.lock'):
             # Get the time at which the key was last set.
-            timestamp = os.path.getmtime(path)
+            timestamp = datetime.fromtimestamp(os.path.getmtime(path))
             
             # If the entry is expired, remove it from the cache.
-            if (isinstance(expiry, timedelta) and datetime.fromtimestamp(timestamp) + expiry < datetime.now()) \
-            or (timestamp + expiry < datetime.now().timestamp()):
+            if timestamp + delta < datetime.now():
+                # Remove the entry.
                 os.remove(path)
