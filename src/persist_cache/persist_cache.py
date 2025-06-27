@@ -185,11 +185,37 @@ def cache(
             
             expiry = value
         
+        def delete_once(*args, **kwargs) -> None:
+            """Remove the cache."""
+            nonlocal dir, expiry, is_method
+            
+            # Map arguments to their keywords or the keyword of the args parameter where necessary, filtering out the first argument if the function is a method, to enable the consistent caching of function calls where positional arguments are used on some occasions and keyword arguments are used on others.
+            arguments = inflate_arguments(signature, args_parameter, args_i, args[is_method:], kwargs)
+            
+            # Hash the arguments to produce the cache key.
+            key = caching.hash(arguments)
+
+            caching.remove(key, dir)
+        
+        def exists(*args, **kwargs) -> None:
+            """Check if cache exists"""
+            nonlocal dir, expiry, is_method
+            
+            # Map arguments to their keywords or the keyword of the args parameter where necessary, filtering out the first argument if the function is a method, to enable the consistent caching of function calls where positional arguments are used on some occasions and keyword arguments are used on others.
+            arguments = inflate_arguments(signature, args_parameter, args_i, args[is_method:], kwargs)
+            
+            # Hash the arguments to produce the cache key.
+            key = caching.hash(arguments)
+
+            return caching.exists(key, dir)            
+        
         wrapper.delete_cache = delete_cache
         wrapper.clear_cache = clear_cache
         wrapper.cache_clear = wrapper.clear_cache # Add an alias for cache_clear which is used by lru_cache.
         wrapper.flush_cache = flush_cache
         wrapper.set_expiry = set_expiry
+        wrapper.delete_once = delete_once
+        wrapper.exists = exists
                 
         # Preserve the original function.
         wrapper.__wrapped__ = func

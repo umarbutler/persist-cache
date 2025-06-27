@@ -49,6 +49,23 @@ def get(key: str, dir: str, expiry: Union[int, float, timedelta, None] = None) -
         with open(path, 'rb') as file:
                 return deserialize(file.read())
 
+def remove(key: str, dir: str) -> None:
+    """Remove the given key of the provided cache to the specified value."""
+    
+    path = f'{dir}/{key}.msgpack'
+    
+    # Lock the entry before writing to it.
+    with FileLock(f'{path}.lock'):
+        if os.path.exists(path):
+            os.remove(path)
+
+def exists(key: str, dir: str) -> bool:
+    """Check if the given key exists in the provided cache."""
+    
+    path = f'{dir}/{key}.msgpack'
+    
+    return os.path.exists(path)
+
 def hash(data: Any) -> str:
     """Hash the given data."""
 
